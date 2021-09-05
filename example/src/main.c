@@ -1,25 +1,39 @@
 #include <stdio.h>
 #include <emscripten.h>
 #include "../dependencies/dcs/dcs.h"
+// ^^^ adds necessary structs and definitions from DCS
 
 extern void execute_sql(sql_t raw_sql, Table *table);
 extern Table *new_table();
 extern void free_table(Table *table);
+// ^^^ group of functions coming from ../dependencies/dcs/dcs.o
 
 int main()
 {
-    Table *table1 = new_table();
-    Table *table2 = new_table();
-    sql_t insert1_s = SQL(INSERT -1 '{"name":"dan"}');
-    sql_t insert3_s = SQL(INSERT 1 '{"name":"dab"}');
-    sql_t select1_s = SQL(SELECT);
-    sql_t insert2_s = SQL(INSERT 0 '{"name":"bia"}');
-    sql_t select2_s = SQL(SELECT);
-    execute_sql(insert1_s, table1);
-    execute_sql(insert3_s, table1);
-    execute_sql(insert2_s, table2);
-    execute_sql(select1_s, table1);
-    execute_sql(select2_s, table2);
-    free_table(table1);
-    free_table(table2);
+    Table *table = new_table();
+    // ^^^ creating a new default table.
+    // Default Structure:
+    // - INTEGER id, and
+    // - VARCHAR(255) content ~ meant to contain all necessary info in sort of a JSON.stringify-ed way.
+    // Notes:
+    // - content will be trucated at 255 characters.
+    // - content must be wrapped around single-quotes.
+
+    sql_t insert_s = SQL(INSERT 0 '{"name":"dan"}');
+    // ^^^ un-executed insert statement.
+    // Note: 'INSERT' must be upper-case, the VM
+    // is case-sensitive.
+
+    sql_t select_s = SQL(SELECT);
+    // ^^^ un-executed select statement.
+    // Note: 'SELECT' must be upper-case, the VM
+    // is case-sensitive.
+
+    execute_sql(insert_s, table);
+    execute_sql(select_s, table);
+    // ^^^ executes SQL statements and
+    // prints results to console.
+
+    free_table(table);
+    // ^^^ frees table post-use.
 }

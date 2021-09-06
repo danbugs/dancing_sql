@@ -24,29 +24,6 @@
    For more info, view: https://cstack.github.io/db_tutorial/.
 */
 
-/** Currently supported SQL statements.
-*/
-typedef enum
-{
-    STATEMENT_INSERT,
-    STATEMENT_SELECT,
-} StatementType;
-
-/** The size of the content row — equivalent
-    to VARCHAR(255).
-*/
-#define COLUMN_CONTENT_SIZE (int)255
-
-/** Default table row. DCS does not currently support
-    custom rows. The content attribute is intended
-    to hold JSON-stringified type of content.
-*/
-typedef struct
-{
-    int id;
-    char content[COLUMN_CONTENT_SIZE + 1];
-} Row;
-
 /** Helper macro for getting the size of a struct
     attribute.
     Note: We are casting 0 as a specific struct 
@@ -76,17 +53,6 @@ typedef struct
     relative to the \c Row struct.
 */
 #define CONTENT_OFFSET (int)(ID_OFFSET + ID_SIZE)
-
-/** General SQL statement — includes a \c type 
-    ( \c STATEMENT_INSERT or \c STATEMENT_SELECT ),
-    and a \c row_to_insert in case of it being of
-    \c type \c STATEMENT_INSERT .
-*/
-typedef struct
-{
-    StatementType type;
-    Row row_to_insert;
-} Statement;
 
 /** Convert to compact representation in memory.
 */
@@ -165,12 +131,6 @@ typedef enum
     EXECUTE_TABLE_FULL,
 } ExecuteResult;
 
-/** A Page (i.e., block of memory) has 4096 Bytes (or, 4KB) —
-    this value was chosen because its' the same size of a 
-    page in most processor architectures.
-*/
-#define PAGE_SIZE (int)4096
-
 /** The number of rows per page is determined by the \c PAGE_SIZE
     divided by the number size of the \c Row struct.
 */
@@ -236,6 +196,37 @@ void *row_slot(Table *table, int row_num)
     return page + byte_offset;
 }
 
+/** Opens database file and keeps track of its' size.
+*/
+Pager *pager_open(const char *filename)
+{
+    int fd = open(filename,
+                  O_RDWR,       // READ/WRITE permission
+                  S_IWUSR |     // WRITE persmission for user
+                      S_IRUSR); // READ permission for user
+
+    if (fd == -1)
+    {
+        printf("[ERROR ] Unable to open file.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int file_length = (int)lseek(fd, 0, SEEK_END);
+    // ^^^ will get file_length
+
+    Pager *pager = malloc(sizeof(Pager));
+    pager->file_descriptor = fd;
+    pager->file_length = file_length;
+
+    for (int i = 0; i < TABLE_MAX_PAGES; i++)
+    {
+        pager->pages[i] = NULL;
+    }
+    // ^^^ clear junk data from cache
+
+    return pager;
+}
+
 /** Flushes all malloc-ed pages to the table database file
 */
 void pager_flush(Pager *pager, int page_offset, int size)
@@ -281,14 +272,6 @@ ExecuteResult execute_insert(Statement *statement, Table *table)
     return EXECUTE_SUCCESS;
 }
 
-/** Helper function for printing rows when
-    handling \c STATEMENT_SELECT .
-*/
-void print_row(Row *row)
-{
-    printf("(%d, %s)\n", row->id, row->content);
-}
-
 /** Handles a \c STATEMENT_SELECT .
 */
 ExecuteResult execute_select(Statement *statement, Table *table)
@@ -297,7 +280,7 @@ ExecuteResult execute_select(Statement *statement, Table *table)
     for (int i = 0; i < table->num_rows; i++)
     {
         deserialize_row(row_slot(table, i), &row);
-        print_row(&row);
+        sprintf(statement->select_result, "%d, %s", row.id, row.content);
     }
 
     return EXECUTE_SUCCESS;
@@ -321,7 +304,7 @@ ExecuteResult execute_statement(Statement *statement, Table *table)
 /** Parses and executes some SQL at a given table.
 */
 EMSCRIPTEN_KEEPALIVE
-void execute_sql(sql_t raw_sql, Table *table)
+Statement execute_sql(sql_t raw_sql, Table *table)
 {
     Statement statement;
     switch (prepare_statement(raw_sql, &statement))
@@ -331,52 +314,21 @@ void execute_sql(sql_t raw_sql, Table *table)
         break;
     case (PREPARE_UNRECOGNIZED_COMMAND):
         printf("[ERROR ] Unrecognized keyword at start of '%s'.\n", raw_sql);
-        return;
+        exit(EXIT_FAILURE);
     case (PREPARE_SYNTAX_ERROR):
         printf("[ERROR ] Syntax error. Could not parse statement.\n");
-        return;
+        exit(EXIT_FAILURE);
     }
 
     switch (execute_statement(&statement, table))
     {
     case (EXECUTE_SUCCESS):
-        printf("[INFO ] Successfully executed the command.\n");
-        break;
+        printf("[INFO ] Successfully executed the command.\n");  
+        return statement;
     case (EXECUTE_TABLE_FULL):
         printf("[ERROR ]  Table full.\n");
-        return;
-    }
-}
-
-/** Opens database file and keeps track of its' size.
-*/
-Pager *pager_open(const char *filename)
-{
-    int fd = open(filename,
-                  O_RDWR,       // READ/WRITE permission
-                  S_IWUSR |     // WRITE persmission for user
-                      S_IRUSR); // READ permission for user
-
-    if (fd == -1)
-    {
-        printf("[ERROR ] Unable to open file.\n");
         exit(EXIT_FAILURE);
     }
-
-    int file_length = (int)lseek(fd, 0, SEEK_END);
-    // ^^^ will get file_length
-
-    Pager *pager = malloc(sizeof(Pager));
-    pager->file_descriptor = fd;
-    pager->file_length = file_length;
-
-    for (int i = 0; i < TABLE_MAX_PAGES; i++)
-    {
-        pager->pages[i] = NULL;
-    }
-    // ^^^ clear junk data from cache
-
-    return pager;
 }
 
 /** Opens a connection to a table or creates it if it doesn't exist.

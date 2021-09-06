@@ -28,8 +28,8 @@ Now, replace the content of `src/main.c`with:
 #include "../dependencies/dcs/dcs.h"
 // ^^^ adds necessary structs and definitions from DCS
 
-extern void execute_sql(sql_t raw_sql, Table *table);
-extern Table *open_table(char* table_name);
+extern Statement execute_sql(sql_t raw_sql, Table *table);
+extern Table *open_table(char *table_name);
 extern void close_table(Table *table);
 // ^^^ group of functions coming from ../dependencies/dcs/dcs.o
 
@@ -49,7 +49,7 @@ int main()
 
     sql_t insert_s = SQL(INSERT 0 '{"name":"dan"}');
     // ^^^ un-executed insert statement.
-    // Notes: 
+    // Notes:
     // - 'INSERT' must be upper-case, the VM
     // is case-sensitive.
     // - There are currently no checks to ensure
@@ -60,13 +60,14 @@ int main()
     // Note: 'SELECT' must be upper-case, the VM
     // is case-sensitive.
 
-    execute_sql(insert_s, table);
-    execute_sql(select_s, table);
+    Statement insert_r = execute_sql(insert_s, table);
+    Statement select_r = execute_sql(select_s, table);
+    printf("select: %s\n", select_r.select_result);
     // ^^^ executes SQL statements and
     // prints results to console.
 
     close_table(table);
-    // ^^^ frees malloc-ed table and its' 
+    // ^^^ frees malloc-ed table and its'
     // attributes and saves data to database file.
 }
 ```

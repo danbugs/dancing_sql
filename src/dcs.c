@@ -280,7 +280,7 @@ ExecuteResult execute_select(Statement *statement, Table *table)
     for (int i = 0; i < table->num_rows; i++)
     {
         deserialize_row(row_slot(table, i), &row);
-        sprintf(statement->select_result, "%d, %s", row.id, row.content);
+        sprintf(statement->select_result, "%s\n%d, %s", statement->select_result, row.id, row.content);
     }
 
     return EXECUTE_SUCCESS;

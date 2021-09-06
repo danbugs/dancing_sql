@@ -35,7 +35,7 @@ int main()
     // Note: 'SELECT' must be upper-case, the VM
     // is case-sensitive.
 
-    Statement insert_r = execute_sql(insert_s, table);
+    execute_sql(insert_s, table);
     Statement select_r = execute_sql(select_s, table);
     printf("select: %s\n", select_r.select_result);
     // ^^^ executes SQL statements and

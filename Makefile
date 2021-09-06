@@ -1,3 +1,5 @@
+# NOTE: This Makefile was written for POSIX-compliant systems
+
 P=dcs
 OBJECTS=src/dcs.c src/dcs.h
 EMCC=emcc

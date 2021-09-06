@@ -352,7 +352,6 @@ void execute_sql(sql_t raw_sql, Table *table)
 */
 Pager *pager_open(const char *filename)
 {
-    printf("%s\n", filename);
     int fd = open(filename,
                   O_RDWR,       // READ/WRITE permission
                   S_IWUSR |     // WRITE persmission for user

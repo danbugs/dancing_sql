@@ -8,4 +8,5 @@ server = "index.js"
 
 [dependencies] # dependencies should not be added manually, use the tapm add command instead
 
-dcs = "danbugs/dancing_sql 0.1.0"
+
+dcs = "danbugs/dancing_sql 0.2.0"

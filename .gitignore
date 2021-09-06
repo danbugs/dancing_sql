@@ -1,3 +1,4 @@
 build/
 releases/
 # dependencies/ folder is not ignored because tapm doesn't have a npm init equivalent command yet
+.vscode/

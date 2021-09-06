@@ -4,5 +4,8 @@ version = "0.1.0" # format: major.minor.patch
 module_type = "main_module" # main_module || side_module
 build_dir = "build" # when modifying this field, change BUILD_DIR in the Makefile too
 releases_repo = "" # format: https://github.com/<owner>/<repo_name>
+server = "index.js"
 
 [dependencies] # dependencies should not be added manually, use the tapm add command instead
+
+dcs = "danbugs/dancing_sql 0.1.0"

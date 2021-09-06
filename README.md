@@ -80,3 +80,7 @@ Now, to finish off, run `tapm build` to compile our code and `tapm run` to test 
 ![getting-started-result](https://i.imgur.com/mhiF2iC.png)
 
 Your information will be persisted to a file at `db/mytable.db`.
+
+You can view the `mytable.db` file directly w/ a hex editor. In VSCode, you can install [this](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-hexdump) extension, right click the `mytable.db` file and select "Show hexdump". You should see:
+
+![getting-started-hexdump-of-db-file](https://i.imgur.com/QxhZhtg.png)

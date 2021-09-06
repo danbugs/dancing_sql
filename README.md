@@ -78,7 +78,7 @@ EMCC_CFLAGS=-s MAIN_MODULE=1 -lnodefs.js -s EXIT_RUNTIME=1
 ```
 
 Now, to finish off, run `tapm build` to compile our code and `tapm run` to test it out. You should see the following in your console:
-![getting-started-result](https://i.imgur.com/mhiF2iC.png)
+![getting-started-result](https://i.imgur.com/DgfCDs2.png)
 
 Your information will be persisted to a file at `db/mytable.db`.
 

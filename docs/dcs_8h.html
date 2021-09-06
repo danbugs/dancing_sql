@@ -71,7 +71,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">dcs.h File Reference</div>  </div>
 </div><!--header-->
@@ -94,19 +95,64 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTable.html">Table</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRow.html">Row</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStatement.html">Statement</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a1f72ba6f39bbe6b0c72378f699c4e559"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#a1f72ba6f39bbe6b0c72378f699c4e559">SQL</a>(raw_sql)&#160;&#160;&#160;#raw_sql</td></tr>
 <tr class="separator:a1f72ba6f39bbe6b0c72378f699c4e559"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad6dac150194278946c410cee6386239"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#aad6dac150194278946c410cee6386239">TABLE_MAX_PAGES</a>&#160;&#160;&#160;(int) 100</td></tr>
+<tr class="memitem:a7d467c1d283fdfa1f2081ba1e0d01b6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e">PAGE_SIZE</a>&#160;&#160;&#160;(int)4096</td></tr>
+<tr class="separator:a7d467c1d283fdfa1f2081ba1e0d01b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad6dac150194278946c410cee6386239"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#aad6dac150194278946c410cee6386239">TABLE_MAX_PAGES</a>&#160;&#160;&#160;(int)100</td></tr>
 <tr class="separator:aad6dac150194278946c410cee6386239"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0f40268b713c310a4d7888c89d8e9bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#ae0f40268b713c310a4d7888c89d8e9bb">sql_t</a>&#160;&#160;&#160;char*</td></tr>
+<tr class="memitem:ae0f40268b713c310a4d7888c89d8e9bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#ae0f40268b713c310a4d7888c89d8e9bb">sql_t</a>&#160;&#160;&#160;char *</td></tr>
 <tr class="separator:ae0f40268b713c310a4d7888c89d8e9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a771ccf91f20a288677c0d431ce299c5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#a771ccf91f20a288677c0d431ce299c5c">COLUMN_CONTENT_SIZE</a>&#160;&#160;&#160;(int)255</td></tr>
+<tr class="separator:a771ccf91f20a288677c0d431ce299c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a5f5d0dfd807d2356ecc3cdabf71b3d53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dcs_8h.html#a5f5d0dfd807d2356ecc3cdabf71b3d53">StatementType</a> { <b>STATEMENT_INSERT</b>, 
+<b>STATEMENT_SELECT</b>
+ }</td></tr>
+<tr class="separator:a5f5d0dfd807d2356ecc3cdabf71b3d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Useful macros and types intended to be used by the end-user. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a771ccf91f20a288677c0d431ce299c5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a771ccf91f20a288677c0d431ce299c5c">&#9670;&nbsp;</a></span>COLUMN_CONTENT_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COLUMN_CONTENT_SIZE&#160;&#160;&#160;(int)255</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The size of the content row — equivalent to VARCHAR(255). </p>
+
+</div>
+</div>
+<a id="a7d467c1d283fdfa1f2081ba1e0d01b6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d467c1d283fdfa1f2081ba1e0d01b6e">&#9670;&nbsp;</a></span>PAGE_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PAGE_SIZE&#160;&#160;&#160;(int)4096</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A Page (i.e., block of memory) has 4096 Bytes (or, 4KB) — this value was chosen because its' the same size of a page in most processor architectures. </p>
+
+</div>
+</div>
 <a id="a1f72ba6f39bbe6b0c72378f699c4e559"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f72ba6f39bbe6b0c72378f699c4e559">&#9670;&nbsp;</a></span>SQL</h2>
 
@@ -133,7 +179,7 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define sql_t&#160;&#160;&#160;char*</td>
+          <td class="memname">#define sql_t&#160;&#160;&#160;char *</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -148,11 +194,27 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define TABLE_MAX_PAGES&#160;&#160;&#160;(int) 100</td>
+          <td class="memname">#define TABLE_MAX_PAGES&#160;&#160;&#160;(int)100</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>An arbitrarily decided number for the maximum number of pages in a table. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a5f5d0dfd807d2356ecc3cdabf71b3d53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f5d0dfd807d2356ecc3cdabf71b3d53">&#9670;&nbsp;</a></span>StatementType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="dcs_8h.html#a5f5d0dfd807d2356ecc3cdabf71b3d53">StatementType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Currently supported SQL statements. </p>
 
 </div>
 </div>

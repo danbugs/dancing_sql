@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.cml": "html",
+        "stdio.h": "c"
+    }
+}

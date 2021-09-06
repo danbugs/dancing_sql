@@ -4,13 +4,13 @@
 // ^^^ adds necessary structs and definitions from DCS
 
 extern void execute_sql(sql_t raw_sql, Table *table);
-extern Table *new_table();
-extern void free_table(Table *table);
+extern Table *open_table();
+extern void close_table(Table *table);
 // ^^^ group of functions coming from ../dependencies/dcs/dcs.o
 
 int main()
 {
-    Table *table = new_table();
+    Table *table = open_table("test");
     // ^^^ creating a new default table.
     // Default Structure:
     // - INTEGER id, and
@@ -34,6 +34,6 @@ int main()
     // ^^^ executes SQL statements and
     // prints results to console.
 
-    free_table(table);
+    close_table(table);
     // ^^^ frees table post-use.
 }

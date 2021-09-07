@@ -5,14 +5,14 @@
     together with the \c sql_t and \c SQL macros in dcs.h. 
 */
 
-#include <stdio.h> // sprintf, sscanf, printf
-#include <stdlib.h> // EXIT_FAILURE, free, malloc, and exit
-#include <string.h> // strlen, strncmp, memcpy
+#include <stdio.h>      // sprintf, sscanf, printf
+#include <stdlib.h>     // EXIT_FAILURE, free, malloc, and exit
+#include <string.h>     // strlen, strncmp, memcpy
 #include <emscripten.h> // EMSCRIPTEN_KEEPALIVE, EM_ASM_
-#include <errno.h> // errno
-#include <fcntl.h> // open, O_RDWR, S_IWUSR, and I_RUSR
-#include <unistd.h> // lseek, read, write, and close
-#include "dcs.h" // TABLE_MAX_PAGES, sql_t, Pager, and Table
+#include <errno.h>      // errno
+#include <fcntl.h>      // open, O_RDWR, S_IWUSR, and I_RUSR
+#include <unistd.h>     // lseek, read, write, and close
+#include "dcs.h"        // TABLE_MAX_PAGES, sql_t, Pager, and Table
 
 /** \mainpage
     \n
@@ -98,7 +98,7 @@ PrepareResult prepare_statement(char *rs, Statement *statement)
         statement->type = STATEMENT_INSERT;
         int args_assigned = sscanf(
             rs,
-            "INSERT %d '%255[^\t\n]'", // truncates input to COLUM_CONTENT_SIZE (255)
+            "INSERT %d %255[^\t\n]", // truncates input to COLUM_CONTENT_SIZE (255)
             &(statement->row_to_insert.id),
             (char *)&(statement->row_to_insert.content));
 
@@ -323,7 +323,7 @@ Statement execute_sql(sql_t raw_sql, Table *table)
     switch (execute_statement(&statement, table))
     {
     case (EXECUTE_SUCCESS):
-        printf("[INFO ] Successfully executed the command.\n");  
+        printf("[INFO ] Successfully executed the command.\n");
         return statement;
     case (EXECUTE_TABLE_FULL):
         printf("[ERROR ]  Table full.\n");
@@ -347,14 +347,19 @@ Table *open_table(char *table_name)
             var fs = require("fs");
             if (!fs.existsSync("./db"))
             {
+                console.log("here");
                 fs.mkdirSync("./db");
             }
             if (!fs.existsSync("./db/" + tableName + ".db"))
             {
+                console.log("./db/" + tableName + ".db");
                 fs.writeFileSync("./db/" + tableName + ".db", "");
             }
-            FS.mkdir("/db");
-            FS.mount(NODEFS, {root : "./db"}, "/db");
+            if (!FS.analyzePath('/db').exists)
+            {
+                FS.mkdir("/db");
+                FS.mount(NODEFS, {root : "./db"}, "/db");
+            }
         },
         table_name);
     // ^^^ does the following:

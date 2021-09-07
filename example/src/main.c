@@ -17,7 +17,6 @@ int main()
     // - VARCHAR(255) content ~ meant to contain all necessary info in sort of a JSON.stringify-ed way.
     // Notes:
     // - content will be trucated at 255 characters.
-    // - content must be wrapped around single-quotes.
     // - just like VARCHAR, you content does not
     // need to have 255 bytes but; regardless,
     // 255 will still be allocated for that field.
@@ -44,4 +43,6 @@ int main()
     close_table(table);
     // ^^^ frees malloc-ed table and its'
     // attributes and saves data to database file.
+    Table *table1 = open_table("mytable");
+    close_table(table1);
 }

@@ -276,6 +276,7 @@ ExecuteResult execute_insert(Statement *statement, Table *table)
 */
 ExecuteResult execute_select(Statement *statement, Table *table)
 {
+    sprintf(statement->select_result, "");
     Row row;
     for (int i = 0; i < table->num_rows; i++)
     {
@@ -304,7 +305,7 @@ ExecuteResult execute_statement(Statement *statement, Table *table)
 /** Parses and executes some SQL at a given table.
 */
 EMSCRIPTEN_KEEPALIVE
-Statement execute_sql(sql_t raw_sql, Table *table)
+char* execute_sql(sql_t raw_sql, Table *table)
 {
     Statement statement;
     switch (prepare_statement(raw_sql, &statement))
@@ -324,7 +325,7 @@ Statement execute_sql(sql_t raw_sql, Table *table)
     {
     case (EXECUTE_SUCCESS):
         printf("[INFO ] Successfully executed the command.\n");
-        return statement;
+        return strdup(statement.select_result);
     case (EXECUTE_TABLE_FULL):
         printf("[ERROR ]  Table full.\n");
         exit(EXIT_FAILURE);

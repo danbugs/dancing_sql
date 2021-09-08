@@ -1,8 +1,9 @@
-#pragma once
 /** \file 
     Useful macros and types intended to be used by the end-user.
 */
 
+#ifndef DCS_H
+#define DCS_H
 /** A function macro to allow embedding SQL within C files.
 */
 #define SQL(raw_sql) #raw_sql
@@ -76,3 +77,4 @@ typedef struct
     Row row_to_insert;
     char select_result[PAGE_SIZE * TABLE_MAX_PAGES]; // maximum select size
 } Statement;
+#endif

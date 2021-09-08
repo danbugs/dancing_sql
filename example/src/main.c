@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <emscripten.h>
 #include "../dependencies/dcs/dcs.h"
 // ^^^ adds necessary structs and definitions from DCS
 
-extern Statement execute_sql(sql_t raw_sql, Table *table);
+extern char *execute_sql(sql_t raw_sql, Table *table);
 extern Table *open_table(char *table_name);
 extern void close_table(Table *table);
 // ^^^ group of functions coming from ../dependencies/dcs/dcs.o
@@ -35,14 +36,14 @@ int main()
     // is case-sensitive.
 
     execute_sql(insert_s, table);
-    Statement select_r = execute_sql(select_s, table);
-    printf("select: %s\n", select_r.select_result);
+    char* results = execute_sql(select_s, table);
+
+    printf("select: %s\n", results);
     // ^^^ executes SQL statements and
     // prints results to console.
+    free(results);
 
     close_table(table);
     // ^^^ frees malloc-ed table and its'
     // attributes and saves data to database file.
-    Table *table1 = open_table("mytable");
-    close_table(table1);
 }

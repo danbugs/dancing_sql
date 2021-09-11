@@ -84,3 +84,9 @@ Your information will be persisted to a file at `db/mytable.db`.
 You can view the `mytable.db` file directly w/ a hex editor. In VSCode, you can install [this](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-hexdump) extension, right click the `mytable.db` file and select "Show hexdump". You should see:
 
 ![getting-started-hexdump-of-db-file](https://i.imgur.com/QxhZhtg.png)
+
+## Notes to Self
+
+Use: `emcc .\src\main.c ..\src\dcs.c -l"nodefs.js" -s EXIT_RUNTIME=1 -fsanitize=address 
+-s ALLOW_MEMORY_GROWTH -gsource-map --source-map-base http://localhost:3000/test -o 
+test/example.js` to check for mem-leaks and whatnot.

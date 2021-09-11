@@ -1,1 +1,1 @@
-require('./build/example.js');
+require('./test/example.js');

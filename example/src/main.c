@@ -35,7 +35,7 @@ int main()
     // Note: 'SELECT' must be upper-case, the VM
     // is case-sensitive.
 
-    execute_sql(insert_s, table);
+    free(execute_sql(insert_s, table));
     char* results = execute_sql(select_s, table);
 
     printf("select: %s\n", results);
